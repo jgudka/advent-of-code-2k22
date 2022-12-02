@@ -14,7 +14,7 @@ func main() {
 	initial := input[:3]
 	initialSums := make([]int, 3)
 	for i, calories := range initial {
-		initialSums[i] = sum(calories)
+		initialSums[i] = utils.Sum(calories)
 	}
 	sort.Slice(initialSums, func(i, j int) bool {
 		return initialSums[i] > initialSums[j]
@@ -22,7 +22,7 @@ func main() {
 
 	first, second, third := initialSums[0], initialSums[1], initialSums[2]
 	for i := 3; i < len(input); i++ {
-		totalCalories := sum(input[i])
+		totalCalories := utils.Sum(input[i])
 		if totalCalories > first {
 			first, second, third = totalCalories, first, second
 		} else if totalCalories > second {
@@ -31,15 +31,7 @@ func main() {
 			third = totalCalories
 		}
 	}
-	fmt.Println(sum([]int{first, second, third}))
-}
-
-func sum(numbers []int) int {
-	sum := 0
-	for _, num := range numbers {
-		sum += num
-	}
-	return sum
+	fmt.Println(utils.Sum([]int{first, second, third}))
 }
 
 func parse(inputFileName string) [][]int {
