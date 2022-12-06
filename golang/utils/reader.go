@@ -22,7 +22,6 @@ func ReadInput(inputFileName string) ([]string, error) {
 
 	scanner, _ := GetScanner(inputFileName)
 	for scanner.Scan() {
-		// number, _ := strconv.Atoi(scanner.Text())
 		lines = append(lines, scanner.Text())
 	}
 	return lines, scanner.Err()

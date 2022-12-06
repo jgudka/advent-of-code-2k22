@@ -8,6 +8,14 @@ func Sum(numbers []int) int {
 	return sum
 }
 
+func CreateSetFromList(items []string) map[string]struct{} {
+	set := make(map[string]struct{})
+	for _, item := range items {
+		set[item] = struct{}{}
+	}
+	return set
+}
+
 func Reverse[T any](s []T) []T {
 	a := make([]T, len(s))
 	copy(a, s)
