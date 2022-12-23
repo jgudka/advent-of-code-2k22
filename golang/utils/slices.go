@@ -8,6 +8,14 @@ func Sum(numbers []int) int {
 	return sum
 }
 
+func Product(numbers []int) int {
+	product := 1
+	for _, num := range numbers {
+		product *= num
+	}
+	return product
+}
+
 func CreateSetFromList(items []string) map[string]struct{} {
 	set := make(map[string]struct{})
 	for _, item := range items {
