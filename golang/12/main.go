@@ -29,11 +29,11 @@ type square struct {
 }
 
 func main() {
-	fmt.Println(partOne("example"))
-	fmt.Println(partOne("input"))
+	// fmt.Println(partOne("example"))
+	// fmt.Println(partOne("input"))
 
-	// fmt.Println(partTwo("example"))
-	// fmt.Println(partTwo("input"))
+	fmt.Println(partTwo("example"))
+	fmt.Println(partTwo("input"))
 }
 
 func partOne(filename string) int {
@@ -41,6 +41,27 @@ func partOne(filename string) int {
 	shortestRoute := grid.getShortestRoute()
 	grid.printRoute()
 	return shortestRoute
+}
+
+func partTwo(filename string) int {
+	grid := parse(filename)
+	mostDirectGrid := grid
+	mostDirectRoute := grid.getShortestRoute()
+	for _, row := range grid.squares {
+		for _, square := range row {
+			if square.elevation == 'a' {
+				grid := parse(filename)
+				grid.start = grid.getSquareAt(square.x, square.y)
+				shortestRoute := grid.getShortestRoute()
+				if shortestRoute > 0 && shortestRoute < mostDirectRoute {
+					mostDirectRoute = shortestRoute
+					mostDirectGrid = grid
+				}
+			}
+		}
+	}
+	mostDirectGrid.printRoute()
+	return mostDirectRoute
 }
 
 func (g *grid) getShortestRoute() int {
@@ -59,6 +80,9 @@ func (g *grid) getShortestRoute() int {
 					}
 				}
 			}
+		}
+		if len(nextSquares) == 0 {
+			return -1
 		}
 		currentSquares, nextSquares = nextSquares, []*square{}
 		routeLength++
@@ -158,12 +182,6 @@ func (s *square) moveRight() *square {
 func (s *square) canMoveTo(targetSquare *square) bool {
 	return !targetSquare.visited && targetSquare.elevation-s.elevation <= 1
 }
-
-// func partTwo(filename string) int {
-// 	input := parse(filename)
-
-// 	return 1
-// }
 
 func parse(inputFileName string) *grid {
 	scanner, _ := utils.GetScanner(inputFileName)
